@@ -38,5 +38,5 @@ $$
 
 似乎还可以把 `\dfrac` 换成 `\cfrac`, 在 XeLaTeX 2021 编译效果如下:
 
-<img src="../../LaTeX 繁分式/image-20220508170336701.png" alt="image-20220508170336701" style="zoom:80%;" />
+<img src="../../assets/LaTeX 繁分式/image-20220508170336701.png" alt="image-20220508170336701" style="zoom:80%;" />
 
