@@ -1,4 +1,8 @@
-## Dream to Control: Learning Behaviors by Latent Imagination
+---
+typora-root-url: ..
+---
+
+# Dream to Control: Learning Behaviors by Latent Imagination
 
 [ICLR 2020]: https://iclr.cc/virtual_2020/poster_S1lOTC4tDS.html
 [GitHub]: https://github.com/google-research/dreamer	"TensorFlow 1"
@@ -64,7 +68,7 @@ $\mu$ and $\sigma$ define a diagonal Gaussian distribution ${\rm a}\sim\mathcal{
 
 This work uses GRU Cell. And a rollout is shown as the following:
 
-![](../assets/Dreamer/dreamer_policy.svg)
+![](assets/Dreamer/dreamer_policy.svg)
 
 ## Policy
 
@@ -95,17 +99,17 @@ estimates rewards beyond $k$ steps with the learned value model. Dreamer uses $\
 $$
 \mathrm{V}_{\lambda}\left(z_{\tau}\right) \doteq(1-\lambda) \sum_{n=1}^{H-1} \lambda^{n-1} \mathrm{~V}_{\mathrm{N}}^{n}\left(z_{\tau}\right)+\lambda^{H-1} \mathrm{~V}_{\mathrm{N}}^{H}\left(z_{\tau}\right),
 $$
-an exponentially-weighted average of the estimates for different $k$ to balance bias and variance. In addition, this $\lambda$-target value function can be defined recursively as follows:
+an exponentially-weighted average of the estimates for different $k$ to balance bias and variance. In addition, this $\lambda$-target value function can also be defined recursively as follows:
 $$
 V_{\lambda}(z_{\tau})\doteq
 \begin{cases}
-r_{\tau}+\gamma\cdot[(1-\lambda)v_{\psi}(z_{\tau+1})+\lambda V_{\lambda}(z_{\tau+1})], \text{if }\tau-t<H\\
-r_{\tau}+\gamma\cdot v_{\psi}(z_{H}), \text{if }\tau-t=H.
+r_{\tau}+\gamma\cdot[(1-\lambda)v_{\psi}(z_{\tau+1})+\lambda V_{\lambda}(z_{\tau+1})], \text{if }\tau-t<H-1\\
+r_{\tau}+\gamma\cdot v_{\psi}(z_{t+H}), \text{if }\tau-t=H-1.
 \end{cases}
 $$
 ​	To update the action and value models, we first compute the value estimates $\mathrm{V}_{\lambda}(z_{\tau})$ for all states $z_\tau$ along the imagined trajectories. The objective for the action model $q_\phi(a_\tau|z_\tau)$ is to predict actions that result in state trajectories with high value estimates. The objective for the value model $v_\psi (z_\tau)$​, in turn, is to regress the value estimates (*I don't know why the value functions should be summed over*):
 $$
-\max _{\phi} \mathrm{E}_{q_{\theta}, q_{\phi}}\left(\sum_{\tau=t}^{t+H} \mathrm{~V}_{\lambda}\left(z_{\tau}\right)\right), \quad \quad \min _{\psi} \mathrm{E}_{q_{\theta}, q_{\phi}}\left( \sum_{\tau=t}^{t+H} \frac{1}{2}\| v_{\psi}(z_{\tau})-\mathrm{V}_{\lambda}(z_{\tau}) \|^{2} \right) .
+\max _{\phi} \mathrm{E}_{q_{\theta}, q_{\phi}}\left(\sum_{\tau=t}^{t+H-1} \mathrm{~V}_{\lambda}\left(z_{\tau}\right)\right), \quad \quad \min _{\psi} \mathrm{E}_{q_{\theta}, q_{\phi}}\left( \sum_{\tau=t}^{t+H-1} \frac{1}{2}\| v_{\psi}(z_{\tau})-\mathrm{V}_{\lambda}(z_{\tau}) \|^{2} \right) .
 $$
 
 ## Training Procedure
@@ -120,11 +124,11 @@ $$
 
 ## Code
 
-### `img_step`
+### `RSSM.img_step`
 
-​	Input: `prev_state` (the latent state) and `prev_action`.
+​	**Input**: `prev_state` (the latent state) and `prev_action`.
 
-​	Output: `prior`.
+​	**Output**: `prior`.
 
 ​	`prev_state` and `prior` all refer to the latent state, which contains two composition: stochastic variables (diagonal Gaussian) and deterministic variables. In reality, they are *dictionaries* of keys:
 
@@ -135,34 +139,42 @@ $$
 
 ​	The detailed function is shown as the following figure:
 
-![](../assets/Dreamer/dreamer_img_step.svg)
+![](assets/Dreamer/dreamer_img_step.svg)
 
-### `obs_step` 
+### `RSSM.obs_step` 
 
-​	Input: `prev_state` (the latent state), `prev_action` and `embed` (the output of the `encoder`).
+​	**Input**: `prev_state` (the latent state), `prev_action` and `embed` (the output of the `encoder`).
 
-​	Output: `post` and `prior`.
+​	**Output**: `post` and `prior`.
 
 ​	`prev_state`, `post` and `prior` all refer to the latent state (see [`img_step`](###img_step) for the details about their structure). The function is shown as the following figure:
 
-![](../assets/Dreamer/dreamer_obs_step-16577158090381.svg)
+![](assets/Dreamer/dreamer_obs_step-16577158090381.svg)
 
-### `observe`
+### `RSSM.observe`
 
-Input:
+**Input**:
 
 * `embed`: $e^{(i)}_t\in\mathbb{R}^{\rm e\_dim}, i=1,2,\cdots,B, t=0, 1,\cdots,T-1$;
 * `action`: $a^{(i)}_t\in\mathbb{R}^{\rm ac\_dim}, i=1,2,\cdots,B, t=0,1,\cdots,T-1$;
 * `state`: a tuple including initial prior $\tilde{z}_0^{(i)}$ and posterior $z_0^{(i)}$, where $i=1,2,\cdots,B$.
 
-Output:
+**Output**:
 
 * `post`: $z^{(i)}_t, i=1,2,\cdots,B, t=1,2,\cdots,T$;
 * `prior`: $\tilde{z}^{(i)}_t, i=1,2,\cdots,B, t=1,2,\cdots,T$.
 
-For each batch, the function is shown as the following figure:
+For each state in the batch, the function is shown as the following figure:
 
-![](../assets/Dreamer/dreamer_observe.svg)
+![](assets/Dreamer/dreamer_observe.svg)
+
+### `Dreamer._imagine_ahead`
+
+**Input**: `post`: $z^{(i)}_t, i=1,2,\cdots,B, t=1,2,\cdots,T$
+
+**Output**: Combination of the deterministic variables and stochastic variables of latent states $z^{(j)}_t$, $j=1, 2,\cdots,B\cdot T, t=1,2,\cdots,H$.
+
+At first, reshape the inputs into $z^{(j)}_0, j=1, 2,\cdots,B\cdot T$. Then, for each latent state $z^{(j)}_0$, compute $z^{(j)}_t$, $ t=1,2,\cdots,H$ by `img_step` and the actor.
 
 ## Other Tricks
 
