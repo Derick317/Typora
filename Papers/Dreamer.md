@@ -68,7 +68,7 @@ $\mu$ and $\sigma$ define a diagonal Gaussian distribution ${\rm a}\sim\mathcal{
 
 This work uses GRU Cell. And a rollout is shown as the following:
 
-![](assets/Dreamer/dreamer_policy.svg)
+![](/assets/Dreamer/dreamer_test_time.svg)
 
 ## Policy
 
@@ -149,7 +149,7 @@ $$
 
 ​	`prev_state`, `post` and `prior` all refer to the latent state (see [`img_step`](###img_step) for the details about their structure). The function is shown as the following figure:
 
-![](assets/Dreamer/dreamer_obs_step-16577158090381.svg)
+![](/assets/Dreamer/dreamer_obs_step-16590819858682.svg)
 
 ### `RSSM.observe`
 
@@ -166,7 +166,7 @@ $$
 
 For each state in the batch, the function is shown as the following figure:
 
-![](assets/Dreamer/dreamer_observe.svg)
+![](/assets/Dreamer/dreamer_observe-16590821684134.svg)
 
 ### `Dreamer._imagine_ahead`
 
