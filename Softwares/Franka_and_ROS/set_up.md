@@ -205,21 +205,21 @@ Possible errors:
 
    *solution*: `sudo apt install dwarves`;
 
-5. If you get some error similar to the grammar error of the source C++ code:
+5. If you get some error similar to the grammar error of the C++ source code:
 
    ```bash
-   In file included from ./include/Tinux/spinlock.h:54，
-   				 from kernel/locking/rtmutex_api.c:5：
+   In file included from ./include/Tinux/spinlock.h:54,
+   				 from kernel/locking/rtmutex_api.c:5:
    kernel/locking/rtmutex.c: In function '_rt_mutex_slowlock':
    kernel/locking/rtmutex.c:1389:47: error: 'flags' undeclared (first use in this function); did you mean 'fls'?
    1389 | raw_spin_unlock_irqrestore(&lock->wait_lock, flags);
-   	 | 												^~~~~
+        | 												^~~~~
    ./include/linux/typecheck.h:11:9: note: in definition of macro 'typecheck'
      11 | typeof(x)_dummy2；\
-   	 | 		  ^
+        | 		  ^
    ```
 
-    I have no idea but downloading a new kernel of different version, and try again!
+    I have no idea but downloadingd: a new kernel of different version, and try again!
 
    
 
@@ -448,13 +448,13 @@ echo "Done to install nvidia kernel driver and user libraries."
 FATAL: modpost: GPL-incompatible module xxx.ko uses GPL-only symbol 'xxx'
 ```
 
-you can test 
+In this case, you can try
 
 ```bash
 $ sudo IGNORE_PREEMPT_RT_PRESENCE=1 bash NVIDIA-xxx.run
 ```
 
-Or you can test (you are expected to change `515` to what you need)
+Or you can try (you are expected to change `515` to what you need)
 
 ```bash
 $ sudo IGNORE_PREEMPT_RT_PRESENCE=1 apt install nvidia-driver-515
@@ -524,7 +524,6 @@ Possible errors:
 
 2. ```bash
     $ sudo apt install ros-noetic-desktop-full
-    [sudo] password for xxx:
     Reading package lists... Done
     Building dependency tree       
     Reading state information... Done
@@ -542,7 +541,7 @@ Possible errors:
     E: Unable to correct problems, you have held broken packages.
     ```
 
-    This error may occur when you just upgrade Ubuntu 18.04 to 20.04. You can just simply run 
+    This error may occur when you just upgraded Ubuntu 18.04 to 20.04. You can just simply run 
 
     ```bash
     $ sudo apt install ros-noetic-desktop
@@ -613,7 +612,7 @@ Possible errors:
     E: Unable to correct problems, you have held broken packages.
     ```
 
-    If you try to install `libavutil56`, you will told that it has already been installed. But the output above indicate that it supports Ubuntu 18.04, not 20.04. So, just uninstall it:
+    If you try to install `libavutil56`, you will told that it has already been installed. But the output above indicates that it supports Ubuntu 18.04, but not 20.04. So, just uninstall it:
 
     ```bash
     $ sudo apt remove --purge libavutil56
