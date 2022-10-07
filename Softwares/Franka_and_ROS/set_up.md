@@ -645,6 +645,8 @@ sudo apt install ros-noetic-libfranka ros-noetic-franka-ros
 
 **NOTE**: `apt` may only have the latest version of `libfranka` and `franka-ros`, but it may not be compatible with the robot system or the robot version. If so, you have to [build them from source](https://frankaemika.github.io/docs/installation_linux.html#building-from-source).
 
+***IMPORTANT***: remember to install franka-ros >= 0.10.0, otherwise `panda-moveit-config` will fail!
+
 **NOTE**: Do not simply copy-and-paste from the documentation. The documentation refers to some path of a directory `/path/to/desired/folder` or something else. Please remember to replace it with the correct path.
 
 **NOTE**: Any whitespace included in the path may cause errors.
@@ -801,3 +803,51 @@ cd <path to libfranka>/build/examples
   *Solution*: ?
 
 - 
+
+## Set up Realsense Camera
+
+Now you can control your robot by robot's state. But for more general reinforcement learning, image inputs is necessary. This require us to calibrate our camera.
+
+### Verify `realsense-ros`
+
+At first, verify `realsense-ros` is installed, which should be installed with the Desktop-Full version ROS.
+
+```bash
+$ rospack list | grep realsense
+realsense2_camera /opt/ros/noetic/share/realsense2_camera
+realsense2_description /opt/ros/noetic/share/realsense2_description
+```
+
+Also you should check whether your camera can launch:
+
+```bash
+$ roslaunch realsense2_camera rs_camera.launch
+```
+
+### Install `visp`, `aruco` and `easy_handeye`
+
+`visp` can be installed directly from source:
+
+```bash
+$ sudo apt install libvisp-dev 
+$ sudo apt install ros-noetic-visp
+$ sudo apt install ros-noetic-vision-visp
+```
+
+`aruco` and `easy_handeye` should be made by yourself:
+
+```bash
+$ cd <path to catkin_ws>/src
+$ git clone https://github.com/IFL-CAMP/easy_handeye
+$ git clone -b noetic-devel https://github.com/pal-robotics/aruco_ros.git
+$ cd ..
+$ catkin_make -DCMAKE_BUILD_TYPE=Release -DFranka_DIR:PATH=<path to libfranka>/build
+```
+
+If you meet errors about compatibility of OpenCV, just install the version closest to its requirements. You do not need to uninstall the existing versions.
+
+### Modify the `.launch` file
+
+You can modify the example files in `src/easy_handeye/docs/example_launch/panda_realsense_eyeonbase.launch`. Please read [this issue](https://github.com/IFL-CAMP/easy_handeye/issues/111) first! And remember to change `markerID` and `markerSize`.
+
+After that, copy your modified file into `src/easy_handeye/easy_handeye/launch/`.
