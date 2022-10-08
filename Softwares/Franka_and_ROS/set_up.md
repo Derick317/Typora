@@ -829,7 +829,7 @@ $ roslaunch realsense2_camera rs_camera.launch
 `visp` can be installed directly from source:
 
 ```bash
-$ sudo apt install libvisp-dev 
+$ # sudo apt install libvisp-dev (maybe not necessary)
 $ sudo apt install ros-noetic-visp
 $ sudo apt install ros-noetic-vision-visp
 ```
