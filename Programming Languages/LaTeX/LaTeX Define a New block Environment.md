@@ -21,7 +21,7 @@ Environment is a piece of text where you focus on the context instead of its for
 \end{center}
 ```
 
-<img src="D:\GitHub\Typora\assets\LaTeX 自定义环境\image-20220914193035752.png" alt="image-20220914193035752" style="zoom:30%;" />
+<img src="../../assets/LaTeX 自定义环境/image-20220914193035752.png" alt="image-20220914193035752" style="zoom:30%;" />
 
 However, there many text in this format, where `Title`, `This is one line. \\` and `This is another line. \\` may be different. How can we avoid copy-and-paste? The answer is: defining a new environment.
 
@@ -90,4 +90,4 @@ else:\\
 Algorithm \ref{alg-matexp} can be used to compute matrix exponentiation.
 ```
 
-![image-20220914215354079](D:\GitHub\Typora\assets\LaTeX 自定义环境\image-20220914215354079.png)
+![image-20220914215354079](../../assets/LaTeX 自定义环境/image-20220914215354079.png)

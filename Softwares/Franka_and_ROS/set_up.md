@@ -213,10 +213,10 @@ Possible errors:
    kernel/locking/rtmutex.c: In function '_rt_mutex_slowlock':
    kernel/locking/rtmutex.c:1389:47: error: 'flags' undeclared (first use in this function); did you mean 'fls'?
    1389 | raw_spin_unlock_irqrestore(&lock->wait_lock, flags);
-        | 												^~~~~
+        |                                              ^~~~~
    ./include/linux/typecheck.h:11:9: note: in definition of macro 'typecheck'
      11 | typeof(x)_dummy2；\
-        | 		  ^
+        |        ^
    ```
 
     I have no idea but downloadingd: a new kernel of different version, and try again!
@@ -462,7 +462,7 @@ $ sudo IGNORE_PREEMPT_RT_PRESENCE=1 apt install nvidia-driver-515
 
 ## Setting up ROS Noetic
 
-You can directly follow the [documentation of ROS](http://wiki.ros.org/noetic/Installation/Ubuntu). `franka_ros2` is currently beta software, so install ROS 1 is okay.
+You can directly follow the [documentation of ROS](http://wiki.ros.org/noetic/Installation/Ubuntu). `franka_ros2` is currently beta software, so installing ROS 1 is okay.
 
 In Yourong Zhang's note, he said that the last two steps
 
@@ -471,7 +471,7 @@ sudo rosdep init
 rosdep update
 ```
 
-are very slow. I found that, however, the network in the PKU Library was fine. These steps took only a few seconds. If you get stuck in this problem indeed, you can refer to this [blog](https://blog.csdn.net/weixin_44023934/article/details/121242176).
+were very slow. I found that, however, the network in the PKU Library was fine. These steps took only a few seconds. If you get stuck in this problem indeed, you can refer to this [blog](https://blog.csdn.net/weixin_44023934/article/details/121242176).
 
 Finally, verify ROS Neotic. Run
 
@@ -829,7 +829,6 @@ $ roslaunch realsense2_camera rs_camera.launch
 `visp` can be installed directly from source:
 
 ```bash
-$ sudo apt install libvisp-dev 
 $ sudo apt install ros-noetic-visp
 $ sudo apt install ros-noetic-vision-visp
 ```
@@ -850,4 +849,29 @@ If you meet errors about compatibility of OpenCV, just install the version close
 
 You can modify the example files in `src/easy_handeye/docs/example_launch/panda_realsense_eyeonbase.launch`. Please read [this issue](https://github.com/IFL-CAMP/easy_handeye/issues/111) first! And remember to change `markerID` and `markerSize`.
 
-After that, copy your modified file into `src/easy_handeye/easy_handeye/launch/`.
+After that, copy your modified file into `src/easy_handeye/easy_handeye/launch/` and run
+
+```bash
+$ roslaunch panda_realsense_eyeonbase.launch
+```
+
+Alternatively,  you can run 
+
+```bash
+$ roslaunch easy_handeye panda_realsense_eyeonbase.launch
+```
+
+in any directory (this may not work somehow).
+
+Now, several windows are supposed to open. The most important one is xxx. In addition, you'd better see a window showing the image taken by the camera. Maybe this window does not come out automatically. If so, run
+
+```bash
+$ rqt
+```
+
+Hopefully, you can see a real-time image taken by the camera. If not, in "Plugins->Topics->Topic Monitor", check off the item `aruco_single` (you are expected to check the name in the `.launch` file). After that, every time you launch `easy_handeye`, run in a new terminal:
+
+```bash
+$ rqt_image_view
+```
+
