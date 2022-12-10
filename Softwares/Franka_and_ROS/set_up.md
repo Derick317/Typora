@@ -219,7 +219,7 @@ Possible errors:
         |        ^
    ```
 
-    I have no idea but downloadingd: a new kernel of different version, and try again!
+    I have no idea but downloading a new kernel of different version, and try again!
 
    
 
