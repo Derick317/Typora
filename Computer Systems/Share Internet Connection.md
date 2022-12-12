@@ -4,18 +4,18 @@ Sometimes a computer does not have a wireless adapter. But another device, fortu
 
 ## Two operating systems are Ubuntu
 
-Suppose computer ***A*** has already connected to the Internet somehow. One end of the cable is connected to network adapter X in computer A, and the other end is connect to network adapter Y in computer B.
+Suppose computer ***A*** has already connected to the Internet somehow. One end of the cable is connected to network adapter ***X*** in computer ***A***, and the other end is connect to network adapter ***Y*** in computer ***B***.
 
-In computer A, open `Settings`$\rightarrow$`Network`. You need to create a new connection profile of the network adapter X: <img src="../assets/Share Internet Connection/new_profile.png" alt="width=0.8"  />
+In computer ***A***, open `Settings`$\rightarrow$`Network`. You need to create a new connection profile of the network adapter ***X***: <img src="../assets/Share Internet Connection/new_profile.png" alt="width=0.8"  />
 
 Or you can remove all existing connection profiles before creating a new profile:
 
-![width=80%](../assets/Share Internet Connection/xip.png)
+<img src="../assets/Share Internet Connection/xip.png" alt="width=80%"  />
 
-During setting up the new profile, just choose `Shared to other computers`. You do not need to set DNS and Routes yourself. Afterward, click `Apply`.![width=0.8](../assets/Share Internet Connection/Screenshot from 2022-12-10 11-24-05.png)
+During setting up the new profile, just choose `Shared to other computers`. You do not need to set DNS and Routes yourself. Afterward, click `Apply`.<img src="../assets/Share Internet Connection/Screenshot from 2022-12-10 11-24-05.png" alt="width=0.8"  />
 
-After you reopening this profile setting, you can see the new IP address (in this example, `10.42.0.1`).![width=0.8](../assets/Share Internet Connection/Screenshot from 2022-12-10 11-23-39.png)
+After you reopening this profile setting, you can see the new IP address (in this example, `10.42.0.1`).<img src="../assets/Share Internet Connection/Screenshot from 2022-12-10 11-23-39.png" alt="width=0.8"  />
 
-Now, it's time for setting up computer B. You need to set the IP address and DNS server manually. The IP address should in the same network segment as computer A, for example, `10.42.0.2`. Netmask can be set as `255.255.255.0`. The DNS address should be the same as computer A's IP address (in this example, `10.42.0.1`). Now, click `Apply`.
+Now, it's time for setting up computer ***B***. You need to set the IP address and DNS server manually. The IP address should in the same network segment as computer ***A***, for example, `10.42.0.2`. Netmask can be set as `255.255.255.0`. The DNS address should be the same as computer ***A***'s IP address (in this example, `10.42.0.1`). Now, click `Apply`.
 
-Hopefully, computer B is connected to the Internet.
+Hopefully, computer ***B*** is connected to the Internet.
