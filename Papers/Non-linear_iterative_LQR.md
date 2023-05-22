@@ -1,1 +1,0 @@
-# Synthesis and Stabilization of Complex Behaviors through Online Trajectory Optimization
