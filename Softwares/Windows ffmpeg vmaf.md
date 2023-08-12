@@ -36,7 +36,7 @@ This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 ```
 
-You also need some packages for install VMAF.
+You also need some packages for installing VMAF.
 
 ```bash
 pacman -S --noconfirm --needed mingw-w64-x86_64-nasm mingw-w64-x86_64-gcc mingw-w64-x86_64-meson mingw-w64-x86_64-ninja
