@@ -277,7 +277,7 @@ $ sudo bash NVIDIA-xxx.run
 
 **NOTE**: It may ask you something about 32-bit compatibility libraries, choose "*No*".
 
-**NOTE**: It may ask you something about *"dkms"*, choose "*No*", otherwise the installation may fail (but you can try it).
+**NOTE**: It may ask you something about *"dkms"*, choose "*No*", otherwise the installation may fail (but you can try it. Sometimes, choosing "Yes" still works).
 
 After you are told the installation is completed, run
 
@@ -459,6 +459,22 @@ Or you can try (you are expected to change `515` to what you need)
 ```bash
 $ sudo IGNORE_PREEMPT_RT_PRESENCE=1 apt install nvidia-driver-515
 ```
+
+**NOTE:** in recent versions, driver installer will automatically run `/usr/bin/nvidia-uninstall`, which uninstalls the driver you installed in the non real-time kernel. If so, when you back to the non real-time kernel, you will see
+
+```shell
+$ nvidia-smi
+NVIDIA-SMI has failed because it couldn't communicate with the NVIDIA driver. Make sure that the latest NVIDIA driver is installed and running.
+```
+
+You can do the following two steps:
+
+```bash
+$ sudo apt-get install dkms
+$ sudo dkms install -m nvidia -v <version>
+```
+
+
 
 ## Setting up ROS Noetic
 
